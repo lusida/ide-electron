@@ -65,6 +65,8 @@ import { MiniDesktopModule } from './module';
 
 import { ExtensionManagerModule } from '../extensionManager/browser';
 
+import { WizardModule } from '../modules/wizard';
+
 export const CommonBrowserModules: ConstructorOf<BrowserModule>[] = [
   MainLayoutModule,
   OverlayModule,
@@ -111,6 +113,6 @@ export const CommonBrowserModules: ConstructorOf<BrowserModule>[] = [
 ];
 
 renderApp({
-  modules: [...CommonBrowserModules, ElectronBasicModule, DemoModule],
+  modules: [...CommonBrowserModules, ElectronBasicModule, DemoModule, WizardModule],
   layoutConfig: customLayoutConfig,
 });
