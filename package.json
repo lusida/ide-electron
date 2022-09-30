@@ -155,5 +155,8 @@
         "node-gyp": "*"
       }
     }
+  },
+  "dependencies": {
+    "antd": "^4.23.3"
   }
 }

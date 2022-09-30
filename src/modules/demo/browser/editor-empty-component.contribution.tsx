@@ -1,5 +1,6 @@
 import React from 'react';
 import { useMemo, useState, useEffect } from 'react';
+import { Button, DatePicker, Space, version } from "antd";
 import {
   Domain,
   ComponentContribution,
@@ -16,6 +17,7 @@ import { IKeymapService } from '@opensumi/ide-keymaps/lib/common/keymaps';
 import { ThrottledDelayer } from '@opensumi/ide-core-common';
 
 import styles from './editor-empty-component.module.less';
+import 'antd/dist/antd.css';
 
 const DEFAULT_CHANGE_DELAY = 500; // ms
 
@@ -114,6 +116,10 @@ export const EditorEmptyComponent = () => {
     <div className={styles.empty_component}>
       <img src={logoUri} onLoad={() => setImgLoaded(true)} />
       {ShortcutView}
+      <Space>
+        <DatePicker />
+        <Button type="primary">Primary Button</Button>
+      </Space>
     </div>
   );
 };
