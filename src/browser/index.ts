@@ -65,6 +65,8 @@ import { MiniDesktopModule } from './module';
 
 import { ExtensionManagerModule } from '../extensionManager/browser';
 
+import { LowCodeModule } from 'modules/lowcode/browser';
+
 export const CommonBrowserModules: ConstructorOf<BrowserModule>[] = [
   MainLayoutModule,
   OverlayModule,
@@ -111,6 +113,6 @@ export const CommonBrowserModules: ConstructorOf<BrowserModule>[] = [
 ];
 
 renderApp({
-  modules: [...CommonBrowserModules, ElectronBasicModule, DemoModule],
+  modules: [...CommonBrowserModules, ElectronBasicModule, DemoModule, LowCodeModule],
   layoutConfig: customLayoutConfig,
 });
