@@ -12,17 +12,45 @@ import {
 import {
   BrowserEditorContribution,
   EditorComponentRegistry,
-  IResource,
   ResourceService,
   WorkbenchEditorService,
 } from '@opensumi/ide-editor/lib/browser';
-import { ILowCodeMetadata } from '../common/lowcode.metadata';
-import LowCodeEntityDesignerComponent from './lowcode.view.edd';
+import { LOWCODE_SCHAME } from '../common/lowcode.metadata';
+import { ApiDesignEditorComponent, ApiEditorComponentResolver, ApiResourceProvider } from './design/api/lowcode.aid';
+import {
+  EntityDesignEditorComponent,
+  EntityEditorComponentResolver,
+  EntityResourceProvider,
+} from './design/entity/lowcode.edd';
+import {
+  EnumDesignEditorComponent,
+  EnumEditorComponentResolver,
+  EnumResourceProvider,
+} from './design/enum/lowcode.eud';
+import {
+  FieldTypeDesignEditorComponent,
+  FieldTypeEditorComponentResolver,
+  FieldTypeResourceProvider,
+} from './design/fieldtype/lowcode.ftd';
+import {
+  FunctionDesignEditorComponent,
+  FunctionEditorComponentResolver,
+  FunctionResourceProvider,
+} from './design/function/lowcode.ffd';
+import {
+  ModelDesignEditorComponent,
+  ModelEditorComponentResolver,
+  ModelResourceProvider,
+} from './design/model/lowcode.mdd';
+import {
+  RegexDesignEditorComponent,
+  RegexEditorComponentResolver,
+  RegexResourceProvider,
+} from './design/regex/lowcode.rgd';
 
 const LOWCODE_TESTID = {
   id: 'lowcode-test-command',
 };
-const Schame_Entity = 'sparrow-edd';
 
 @Domain(MenuContribution, CommandContribution)
 export class LowCodeMenuContribution implements MenuContribution, CommandContribution {
@@ -32,7 +60,7 @@ export class LowCodeMenuContribution implements MenuContribution, CommandContrib
   registerCommands(registry: CommandRegistry): void {
     registry.registerCommand(LOWCODE_TESTID, {
       execute: () => {
-        this.editorService.open(new URI(`${Schame_Entity}://demo.edd`), { preview: false });
+        this.editorService.open(new URI(`${LOWCODE_SCHAME.Entity}:///demo.edd`), { preview: false });
       },
     });
   }
@@ -48,45 +76,57 @@ export class LowCodeMenuContribution implements MenuContribution, CommandContrib
 
 @Domain(FsProviderContribution)
 export class LowCodeFileContribution implements FsProviderContribution {
-  // registerProvider(registry: { registerProvider(scheme: string, provider: FileSystemProvider): IDisposable }): void | Promise<void> {
-  //     registry.registerProvider(Schame_Entity, new LowCodeEntityFileProvider());
-  // }
+  registerProvider(registry: {
+    registerProvider(scheme: string, provider: FileSystemProvider): IDisposable;
+  }): void | Promise<void> {}
 }
 
 @Domain(BrowserEditorContribution)
 export class LowCodeEditorContribution implements BrowserEditorContribution {
-  getFileName = (uri: URI) => {
-    alert(uri);
-    const str = uri.toString();
-
-    const arr = str.split('/');
-
-    return arr[arr.length - 1];
-  };
-
   registerResource(resourceService: ResourceService): void {
-    resourceService.registerResourceProvider({
-      scheme: Schame_Entity,
-      provideResource: async (uri: URI): Promise<IResource<ILowCodeMetadata>> => ({
-        uri,
-        name: this.getFileName(uri),
-        icon: 'class-edd',
-      }),
-    });
+    resourceService.registerResourceProvider(new EntityResourceProvider());
+    resourceService.registerResourceProvider(new ModelResourceProvider());
+    resourceService.registerResourceProvider(new EnumResourceProvider());
+    resourceService.registerResourceProvider(new FieldTypeResourceProvider());
+    resourceService.registerResourceProvider(new RegexResourceProvider());
+    resourceService.registerResourceProvider(new FunctionResourceProvider());
+    resourceService.registerResourceProvider(new ApiResourceProvider());
   }
 
   registerEditorComponent(editorComponentRegistry: EditorComponentRegistry): void {
-    editorComponentRegistry.registerEditorComponent({
-      component: LowCodeEntityDesignerComponent,
-      uid: 'entity-designer-component',
-      scheme: Schame_Entity,
-    });
+    // Entity
+    editorComponentRegistry.registerEditorComponent(new EntityDesignEditorComponent());
 
-    editorComponentRegistry.registerEditorComponentResolver(Schame_Entity, (resource, results) => {
-      results.push({
-        type: 'component',
-        componentId: 'entity-designer-component',
-      });
-    });
+    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.Entity, EntityEditorComponentResolver);
+
+    // Model
+    editorComponentRegistry.registerEditorComponent(new ModelDesignEditorComponent());
+
+    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.Model, ModelEditorComponentResolver);
+
+    // Enum
+    editorComponentRegistry.registerEditorComponent(new EnumDesignEditorComponent());
+
+    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.Enum, EnumEditorComponentResolver);
+
+    // Regex
+    editorComponentRegistry.registerEditorComponent(new RegexDesignEditorComponent());
+
+    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.Regex, RegexEditorComponentResolver);
+
+    // FieldType
+    editorComponentRegistry.registerEditorComponent(new FieldTypeDesignEditorComponent());
+
+    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.FieldType, FieldTypeEditorComponentResolver);
+
+    // Function
+    editorComponentRegistry.registerEditorComponent(new FunctionDesignEditorComponent());
+
+    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.Function, FunctionEditorComponentResolver);
+
+    // Api
+    editorComponentRegistry.registerEditorComponent(new ApiDesignEditorComponent());
+
+    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.Api, ApiEditorComponentResolver);
   }
 }
