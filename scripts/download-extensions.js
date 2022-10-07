@@ -48,7 +48,7 @@ const parallelRunPromise = (lazyPromises, n) => {
   return new Promise(addWorking);
 };
 
-const api = 'https://open-vsx.org/api/';
+const api = 'https://marketplace.smartide.cn/api/';
 
 async function downloadExtension(url, namespace, extensionName) {
   const tmpPath = path.join(os.tmpdir(), 'extension', v4());
