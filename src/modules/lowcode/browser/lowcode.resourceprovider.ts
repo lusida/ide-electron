@@ -1,6 +1,5 @@
-import { URI, MaybePromise, Uri } from '@opensumi/ide-core-common';
+import { URI, MaybePromise } from '@opensumi/ide-core-common';
 import { AskSaveResult, IResource, IResourceProvider } from '@opensumi/ide-editor';
-import { LOWCODE_SCHAME } from 'modules/lowcode/common/lowcode.metadata';
 
 export class LowCodeResourceProvider implements IResourceProvider {
   scheme?: string | undefined;
@@ -29,8 +28,8 @@ export class LowCodeResourceProvider implements IResourceProvider {
     return -1;
   }
   provideResource(uri: URI): MaybePromise<IResource<any>> {
-    console.log('provideResource:', `${this.scheme}://${uri.path}`);
     const a = new URI(`${this.scheme}://${uri.path}`);
+    console.log('provideResource:', a);
     return {
       uri: a,
       name: this.getFileName(uri),

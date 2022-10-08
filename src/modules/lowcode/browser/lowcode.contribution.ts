@@ -21,6 +21,7 @@ import {
   EntityDesignEditorComponent,
   EntityEditorComponentResolver,
   EntityResourceProvider,
+  EntityFileSystemProvider,
 } from './design/entity/lowcode.edd';
 import {
   EnumDesignEditorComponent,
@@ -76,9 +77,9 @@ export class LowCodeMenuContribution implements MenuContribution, CommandContrib
 
 @Domain(FsProviderContribution)
 export class LowCodeFileContribution implements FsProviderContribution {
-  registerProvider(registry: {
-    registerProvider(scheme: string, provider: FileSystemProvider): IDisposable;
-  }): void | Promise<void> {}
+  registerProvider(registry) {
+    registry.registerProvider(LOWCODE_SCHAME.Entity, new EntityFileSystemProvider());
+  }
 }
 
 @Domain(BrowserEditorContribution)

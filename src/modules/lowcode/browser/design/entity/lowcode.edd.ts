@@ -1,6 +1,7 @@
 import { IEditorComponent, ReactEditorComponent } from '@opensumi/ide-editor/lib/browser';
 import { LOWCODE_SCHAME, LOWCODE_COMPONENTID, LOWCODE_FILE } from '../../../common/lowcode.metadata';
 import { LowCodeResourceProvider } from '../../lowcode.resourceprovider';
+import { LowCodeFileSystemProvider } from '../../lowcode.filesystemprovider';
 import EntityDesignView from './lowcode.edd.view';
 
 // Entity编辑器设计器组件定义
@@ -23,3 +24,6 @@ export const EntityEditorComponentResolver = (resource, results) => {
     componentId: LOWCODE_COMPONENTID.Entity,
   });
 };
+
+// Entity文件协议提供程序
+export class EntityFileSystemProvider extends LowCodeFileSystemProvider {}

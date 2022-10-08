@@ -25,11 +25,11 @@ export const LOWCODE_SCHAME = {
 };
 
 export const LOWCODE_COMPONENTID = {
-  Entity: 'sparrow-design-entity',
-  Model: 'sparrow-design-model',
-  Enum: 'sparrow-design-enum',
-  FieldType: 'sparrow-design-fieldtype',
-  Function: 'sparrow-design-function',
-  Regex: 'sparrow-design-regex',
-  Api: 'sparrow-design-api',
+  Entity: 'sparrow_design_entity',
+  Model: 'sparrow_design_model',
+  Enum: 'sparrow_design_enum',
+  FieldType: 'sparrow_design_fieldtype',
+  Function: 'sparrow_design_function',
+  Regex: 'sparrow_design_regex',
+  Api: 'sparrow_design_api',
 };
