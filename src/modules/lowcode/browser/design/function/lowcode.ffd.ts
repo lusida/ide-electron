@@ -1,3 +1,4 @@
+import { localize } from '@opensumi/ide-core-common';
 import { EditorComponentRenderMode, IEditorComponent, ReactEditorComponent } from '@opensumi/ide-editor/lib/browser';
 import { LOWCODE_SCHAME, LOWCODE_COMPONENTID, LOWCODE_FILE } from '../../../common/lowcode.metadata';
 import { LowCodeResourceProvider } from '../../lowcode.resourceprovider';
@@ -19,8 +20,12 @@ export class FunctionResourceProvider extends LowCodeResourceProvider {
 
 // Function文件资源编辑器组件发现程序
 export const FunctionEditorComponentResolver = (resource, results) => {
-  results.push({
-    type: 'component',
-    componentId: LOWCODE_COMPONENTID.Function,
-  });
+  if (resource.uri.path.ext === LOWCODE_FILE.Function) {
+    results.push({
+      type: 'component',
+      title: localize('lowcode.edd.title'),
+      weight: 10,
+      componentId: LOWCODE_COMPONENTID.Function,
+    });
+  }
 };

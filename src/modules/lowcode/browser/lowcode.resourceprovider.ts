@@ -1,7 +1,7 @@
 import { URI, MaybePromise } from '@opensumi/ide-core-common';
 import { AskSaveResult, IResource, IResourceProvider } from '@opensumi/ide-editor';
 
-export class LowCodeResourceProvider implements IResourceProvider {
+export abstract class LowCodeResourceProvider implements IResourceProvider {
   scheme?: string | undefined;
   extension: string;
   getFileName(uri: URI) {

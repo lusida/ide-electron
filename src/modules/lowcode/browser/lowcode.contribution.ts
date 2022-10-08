@@ -1,14 +1,6 @@
 import { Autowired } from '@opensumi/di';
-import { FsProviderContribution } from '@opensumi/ide-core-browser';
 import { IMenuRegistry, MenuContribution, MenuId } from '@opensumi/ide-core-browser/lib/menu/next';
-import {
-  CommandContribution,
-  CommandRegistry,
-  Domain,
-  FileSystemProvider,
-  IDisposable,
-  URI,
-} from '@opensumi/ide-core-common';
+import { CommandContribution, CommandRegistry, Domain, Schemes, URI } from '@opensumi/ide-core-common';
 import {
   BrowserEditorContribution,
   EditorComponentRegistry,
@@ -21,7 +13,6 @@ import {
   EntityDesignEditorComponent,
   EntityEditorComponentResolver,
   EntityResourceProvider,
-  EntityFileSystemProvider,
 } from './design/entity/lowcode.edd';
 import {
   EnumDesignEditorComponent,
@@ -75,13 +66,6 @@ export class LowCodeMenuContribution implements MenuContribution, CommandContrib
   }
 }
 
-@Domain(FsProviderContribution)
-export class LowCodeFileContribution implements FsProviderContribution {
-  registerProvider(registry) {
-    registry.registerProvider(LOWCODE_SCHAME.Entity, new EntityFileSystemProvider());
-  }
-}
-
 @Domain(BrowserEditorContribution)
 export class LowCodeEditorContribution implements BrowserEditorContribution {
   registerResource(resourceService: ResourceService): void {
@@ -98,36 +82,36 @@ export class LowCodeEditorContribution implements BrowserEditorContribution {
     // Entity
     editorComponentRegistry.registerEditorComponent(new EntityDesignEditorComponent());
 
-    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.Entity, EntityEditorComponentResolver);
+    editorComponentRegistry.registerEditorComponentResolver(Schemes.file, EntityEditorComponentResolver);
 
     // Model
     editorComponentRegistry.registerEditorComponent(new ModelDesignEditorComponent());
 
-    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.Model, ModelEditorComponentResolver);
+    editorComponentRegistry.registerEditorComponentResolver(Schemes.file, ModelEditorComponentResolver);
 
     // Enum
     editorComponentRegistry.registerEditorComponent(new EnumDesignEditorComponent());
 
-    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.Enum, EnumEditorComponentResolver);
+    editorComponentRegistry.registerEditorComponentResolver(Schemes.file, EnumEditorComponentResolver);
 
     // Regex
     editorComponentRegistry.registerEditorComponent(new RegexDesignEditorComponent());
 
-    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.Regex, RegexEditorComponentResolver);
+    editorComponentRegistry.registerEditorComponentResolver(Schemes.file, RegexEditorComponentResolver);
 
     // FieldType
     editorComponentRegistry.registerEditorComponent(new FieldTypeDesignEditorComponent());
 
-    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.FieldType, FieldTypeEditorComponentResolver);
+    editorComponentRegistry.registerEditorComponentResolver(Schemes.file, FieldTypeEditorComponentResolver);
 
     // Function
     editorComponentRegistry.registerEditorComponent(new FunctionDesignEditorComponent());
 
-    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.Function, FunctionEditorComponentResolver);
+    editorComponentRegistry.registerEditorComponentResolver(Schemes.file, FunctionEditorComponentResolver);
 
     // Api
     editorComponentRegistry.registerEditorComponent(new ApiDesignEditorComponent());
 
-    editorComponentRegistry.registerEditorComponentResolver(LOWCODE_SCHAME.Api, ApiEditorComponentResolver);
+    editorComponentRegistry.registerEditorComponentResolver(Schemes.file, ApiEditorComponentResolver);
   }
 }

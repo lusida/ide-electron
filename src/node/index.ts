@@ -16,6 +16,7 @@ import { AddonsModule } from '@opensumi/ide-addons/lib/node';
 import { MiniCodeDesktopNodeModule } from './module';
 
 import { ExtensionManagerModule } from '../extensionManager/node';
+import { LowCodeNodeModule } from 'modules/lowcode/node';
 
 export const CommonNodeModules: ConstructorOf<NodeModule>[] = [
   ServerCommonModule,
@@ -32,7 +33,7 @@ export const CommonNodeModules: ConstructorOf<NodeModule>[] = [
 ];
 
 startServer({
-  modules: [...CommonNodeModules, MiniCodeDesktopNodeModule],
+  modules: [...CommonNodeModules, MiniCodeDesktopNodeModule, LowCodeNodeModule],
 }).then(() => {
   console.log('ready');
   if (process.send) {

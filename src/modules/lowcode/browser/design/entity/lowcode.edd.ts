@@ -1,7 +1,7 @@
+import { localize } from '@opensumi/ide-core-common';
 import { IEditorComponent, ReactEditorComponent } from '@opensumi/ide-editor/lib/browser';
 import { LOWCODE_SCHAME, LOWCODE_COMPONENTID, LOWCODE_FILE } from '../../../common/lowcode.metadata';
 import { LowCodeResourceProvider } from '../../lowcode.resourceprovider';
-import { LowCodeFileSystemProvider } from '../../lowcode.filesystemprovider';
 import EntityDesignView from './lowcode.edd.view';
 
 // Entity编辑器设计器组件定义
@@ -19,11 +19,12 @@ export class EntityResourceProvider extends LowCodeResourceProvider {
 
 // Entity文件资源编辑器组件发现程序
 export const EntityEditorComponentResolver = (resource, results) => {
-  results.push({
-    type: 'component',
-    componentId: LOWCODE_COMPONENTID.Entity,
-  });
+  if (resource.uri.path.ext === LOWCODE_FILE.Entity) {
+    results.push({
+      type: 'component',
+      title: localize('lowcode.edd.title'),
+      weight: 10,
+      componentId: LOWCODE_COMPONENTID.Entity,
+    });
+  }
 };
-
-// Entity文件协议提供程序
-export class EntityFileSystemProvider extends LowCodeFileSystemProvider {}
